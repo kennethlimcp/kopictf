@@ -23,9 +23,10 @@ def aesCBCself(key, iv, text, mode):
         print("encrypting")
         while textBlock:
             textBlock = textFile.read(8)    #read 8 bytes
-            output += textBlock ^ ivContent #XOR
-            ivContent = textBlock           #update  IV for next stage with ciphertext
-            print(textBlock)
+            XOREd = int.from_bytes(textBlock, 'little') ^ int.from_bytes(ivContent, 'little') #XOR
+            output += XOREd.to_bytes(16, byteorder='little')
+            ivContent = output           #update IV for next stage with ciphertext
+            print(output)
 
     elif(mode.lower() == 'd'):
         print("decrypting")
@@ -45,4 +46,4 @@ if __name__=="__main__":
     keyfile=args.keyFile
     mode = args.mode
 
-    cbc(keyfile, ivFile, inFile,mode)
+    aesCBCself(keyfile, ivFile, inFile,mode)
