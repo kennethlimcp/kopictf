@@ -22,6 +22,7 @@
 #### Resources
 - [Padding oracle attack](http://robertheaton.com/2013/07/29/padding-oracle-attack/)
 - [Byte flipping](http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/#gref)
+- [CBC mode](https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_Block_Chaining_.28CBC.29)
 
 #### Installation
 - Python3
