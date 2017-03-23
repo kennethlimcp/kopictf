@@ -22,3 +22,7 @@
 #### Resources
 - [Padding oracle attack](http://robertheaton.com/2013/07/29/padding-oracle-attack/)
 - [Byte flipping](http://resources.infosecinstitute.com/cbc-byte-flipping-attack-101-approach/#gref)
+
+#### Installation
+- Python3
+- [pip install pycrypto](https://pypi.python.org/pypi/pycrypto)
