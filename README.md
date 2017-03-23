@@ -1,10 +1,14 @@
 #### General information
 1. 1-2 hour challenge
-2. Byte flipping + CBC padding oracle attack? (Yes)
-3. Unique plaintext and ciphertext for each query during byte flipping
-4. Morse code plaintext for flag (maybe)
+2. Byte flipping + CBC padding oracle attack?
+3. Using AES
+  - key length of 256 bits (maximize   larger key space)
+  - IV length of 128 bits
+  - fixed block size of 128 bits
+4. Unique plaintext and ciphertext for each query during byte flipping
+5. Morse code plaintext for flag (maybe)
 5. byte flipping will lead to receiving the encrypted file for next part of the challenge
-6. Twist so that direct operation of the goggled solution doesn't work
+7. Twist so that direct operation of the goggled solution doesn't work
 
 #### Task
 - CBC encryption and decryption functions
