@@ -26,4 +26,4 @@
 
 #### Installation
 - Python3
-- [pip install pycrypto](https://pypi.python.org/pypi/pycrypto)
+- [pip3 install pycrypto](https://pypi.python.org/pypi/pycrypto)
