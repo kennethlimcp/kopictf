@@ -58,3 +58,21 @@ if __name__=="__main__":
     print ("plaintext == decrypted")
   else:
     print("error")
+
+  iv = (0x562e17996d093d28ddb3ba695a2e6f58).to_bytes(16, 'little')
+  key = (0xc286696d887c9aa0611bbb3e2025a45a).to_bytes(16, 'little')
+  plaintext = (0x000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f).to_bytes(32, 'little')
+
+  print("Plaintext generated!")
+  print("plaintext:          ", plaintext)
+
+  encrypted = aesCBCgiven(key,iv,plaintext, 'e')
+  print("encypted:           ", encrypted)
+
+  decrypted = aesCBCgiven(key,iv,encrypted, 'd')
+  print("decrypted:          ", decrypted)
+
+  if(plaintext == decrypted):
+    print ("plaintext == decrypted")
+  else:
+    print("error")
