@@ -4,6 +4,8 @@
 # AES-CBC-256
 
 import argparse
+from Padding import *
+from Crypto.Cipher import AES
 
 def aesCBCself(key, iv, text, mode):
     keyFile = open(key, 'rb')
@@ -15,21 +17,29 @@ def aesCBCself(key, iv, text, mode):
     ivFile.close()
 
     textFile = open(text, 'rb')
-    textBlock = b'0'
+    textBlock = textFile.read(16)
 
     output = b''
 
     if(mode.lower() == 'e'):
         print("encrypting")
+        aes = obj = AES.new(keyContent, AES.MODE_CBC, ivContent)
         while textBlock:
-            textBlock = textFile.read(8)    #read 8 bytes
-            XOREd = int.from_bytes(textBlock, 'little') ^ int.from_bytes(ivContent, 'little') #XOR
-            output += XOREd.to_bytes(16, byteorder='little')
-            ivContent = output           #update IV for next stage with ciphertext
-            print(output)
+            if(len(textBlock)%16 != 0):       #Padding, not sure if want at the end, or check for every block
+                textBlock = pad(textBlock,16,'pkcs7')
+
+            ciphertext = aes.encrypt(textBlock)
+
+            XOREd = int.from_bytes(ciphertext, 'little') ^ int.from_bytes(ivContent, 'little') #XOR
+            ivContent = XOREd.to_bytes(16, byteorder='little')           #update IV for next stage with ciphertext
+            output += XOREd.to_bytes(16, byteorder='little')            # Appending of ciphertext to output
+            textBlock = textFile.read(16)    #read 16 bytes
 
     elif(mode.lower() == 'd'):
         print("decrypting")
+
+    print(output)
+    print(len(output))
 
     textFile.close()
 
