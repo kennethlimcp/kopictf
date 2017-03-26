@@ -29,9 +29,7 @@ def aesCBCself(key, iv, text, mode):
             if(len(textBlock)%16 != 0):       #Padding, not sure if want at the end, or check for every block
                 textBlock = pad(textBlock,16,'pkcs7')
 
-            XOREd = int.from_bytes(textBlock, 'little') #^ int.from_bytes(ivContent, 'little') #XOR
-
-            ciphertext = aes.encrypt(XOREd.to_bytes(16, byteorder='little'))
+            ciphertext = aes.encrypt(textBlock)
 
             ivContent = ciphertext          #update IV for next stage with ciphertext
             output += ciphertext            # Appending of ciphertext to output
