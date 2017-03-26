@@ -23,17 +23,21 @@ def aesCBCself(key, iv, text, mode):
 
     if(mode.lower() == 'e'):
         print("encrypting")
-        aes = obj = AES.new(keyContent, AES.MODE_CBC, ivContent)
         while textBlock:
+            aes = obj = AES.new(keyContent, AES.MODE_CBC, ivContent)
+
             if(len(textBlock)%16 != 0):       #Padding, not sure if want at the end, or check for every block
                 textBlock = pad(textBlock,16,'pkcs7')
 
-            ciphertext = aes.encrypt(textBlock)
+            XOREd = int.from_bytes(textBlock, 'little') #^ int.from_bytes(ivContent, 'little') #XOR
 
-            XOREd = int.from_bytes(ciphertext, 'little') ^ int.from_bytes(ivContent, 'little') #XOR
-            ivContent = XOREd.to_bytes(16, byteorder='little')           #update IV for next stage with ciphertext
-            output += XOREd.to_bytes(16, byteorder='little')            # Appending of ciphertext to output
+            ciphertext = aes.encrypt(XOREd.to_bytes(16, byteorder='little'))
+
+            ivContent = ciphertext          #update IV for next stage with ciphertext
+            output += ciphertext            # Appending of ciphertext to output
             textBlock = textFile.read(16)    #read 16 bytes
+
+        return output
 
     elif(mode.lower() == 'd'):
         print("decrypting")
@@ -56,4 +60,5 @@ if __name__=="__main__":
     keyfile=args.keyFile
     mode = args.mode
 
-    aesCBCself(keyfile, ivFile, inFile,mode)
+    encrypted = aesCBCself(keyfile, ivFile, inFile,mode)
+    print("encypted:           ", encrypted)
