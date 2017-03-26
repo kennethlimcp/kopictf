@@ -7,11 +7,11 @@ def aesCBCgiven(key, iv, text, mode):
         padded = text
         padded = pad(padded,16,'pkcs7')
 
-        print("padded:             ", padded)
+        # print("padded:             ", padded)
         return aes.encrypt(padded)
     elif(mode.lower() == 'd'):
         decrypted = aes.decrypt(text)
-        print("decrypted with pad: ", decrypted)
+        # print("decrypted with pad: ", decrypted)
 
         unpadded = b''
         try:
@@ -20,5 +20,5 @@ def aesCBCgiven(key, iv, text, mode):
         except ValueError:
             return "Padding error bitch!"
 
-        print("unpadded:           ", unpadded)
+        # print("unpadded:           ", unpadded)
         return unpadded
