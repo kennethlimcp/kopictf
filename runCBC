@@ -1,0 +1,1 @@
+python3 aesCBCself.py -i plaintext -iv iv -k key -m e
