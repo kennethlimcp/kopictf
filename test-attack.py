@@ -34,5 +34,5 @@ if __name__=="__main__":
         if(plainText == decrypted):
             print("mutated encyption:  ", mutatedCipherBlock)
             print("decrypted:          ", decrypted)
-            print("correctByte", correctByte, hex(correctByte), hex(correctByte ^ int.from_bytes(encrypted[-2:-1], 'little')))
+            print("correctByte", correctByte, hex(correctByte), hex(correctByte ^ int.from_bytes(encrypted[-1:], 'little')))
             exit()
