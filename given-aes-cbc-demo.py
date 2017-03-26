@@ -41,6 +41,10 @@ if __name__=="__main__":
   plaintext = plaintextFile.read()
   plaintextFile.close()
 
+  iv = (0x3dafba429d9eb430b422da802c9fac41).to_bytes(16, 'little')
+  key = (0x06a9214036b8a15b512e03d534120006).to_bytes(16, 'little')
+  plaintext = str.encode("Single block msg")
+
   print("Plaintext generated!")
   print("plaintext:          ", plaintext)
 
