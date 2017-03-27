@@ -2,15 +2,16 @@ from Crypto.Cipher import AES
 from Padding import *
 
 def aesCBCgiven(key, iv, text, mode):
-    aes = obj = AES.new(key, AES.MODE_CBC, iv)
     if(mode.lower() == 'e'):
+        aesEncrypt = obj = AES.new(key, AES.MODE_CBC, iv)
         padded = text
         padded = pad(padded,16,'pkcs7')
 
         # print("padded:             ", padded)
-        return aes.encrypt(padded)
+        return aesEncrypt.encrypt(padded)
     elif(mode.lower() == 'd'):
-        decrypted = aes.decrypt(text)
+        aesDecrypt = obj = AES.new(key, AES.MODE_CBC, iv)
+        decrypted = aesDecrypt.decrypt(text)
         # print("decrypted with pad: ", decrypted)
 
         unpadded = b''

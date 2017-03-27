@@ -28,11 +28,14 @@ if __name__=="__main__":
     print("\n\nPerforming mutation")
 
     for correctByte in range(0, 256):
-        mutatedCipherBlock = encrypted[0:-1] + (correctByte ^ 1).to_bytes(1, 'little')
-        decrypted = aesCBCgiven(key,iv,mutatedCipherBlock, 'd')
+        mutatedCipherByte = encrypted[15] ^ correctByte ^ 0x01 #XOR in int
+        mutatedCipherByteStr = mutatedCipherByte.to_bytes(1, 'little') #convert to byte format
 
-        if(plainText == decrypted):
-            print("mutated encyption:  ", mutatedCipherBlock)
-            print("decrypted:          ", decrypted)
-            print("correctByte", correctByte, hex(correctByte), hex(correctByte ^ int.from_bytes(encrypted[-1:], 'little')))
-            exit()
+        mutatedCipherText = encrypted[0:15] + mutatedCipherByteStr + encrypted[16:32]
+
+        decrypted = aesCBCgiven(key,iv,mutatedCipherText, 'd')
+
+        if(decrypted != "Padding error bitch!"):
+            print(mutatedCipherText)
+            print("correctByte", correctByte)
+            print("value: " ,chr(correctByte))
