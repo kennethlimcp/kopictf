@@ -3,7 +3,7 @@
 # 26 March 2017
 # Attack test code
 
-from aesCBCgiven import aesCBCgiven
+from aesCBC import aesCBC
 
 if __name__=="__main__":
     print("Starting attack :)")
@@ -13,8 +13,8 @@ if __name__=="__main__":
     # 2 blocks of repeating "1234567890123456" string + "123456789012345"
     plainText =  str.encode("12345678901234561234567890123456123456789012345")
 
-    encrypted = aesCBCgiven(key,iv,plainText, 'e')
-    decrypted = aesCBCgiven(key,iv,encrypted, 'd')
+    encrypted = aesCBC(key,iv,plainText, 'e')
+    decrypted = aesCBC(key,iv,encrypted, 'd')
 
     print("plaintext:          ", plainText)
     print("encypted:           ", encrypted)
@@ -36,7 +36,7 @@ if __name__=="__main__":
 
         mutatedCipherText = encrypted[0:14] + mutatedCipherByteStr + (encrypted[15]^54^0x02).to_bytes(1, 'little') + encrypted[16:32]
 
-        decrypted = aesCBCgiven(key,iv,mutatedCipherText, 'd')
+        decrypted = aesCBC(key,iv,mutatedCipherText, 'd')
 
         if(decrypted != "Padding error bitch!"):
             print(mutatedCipherText)
@@ -54,7 +54,7 @@ if __name__=="__main__":
 
         mutatedCipherText = encrypted[0:15] + mutatedCipherByteStr + encrypted[16:32]
 
-        decrypted = aesCBCgiven(key,iv,mutatedCipherText, 'd')
+        decrypted = aesCBC(key,iv,mutatedCipherText, 'd')
 
         if(decrypted != "Padding error bitch!"):
             print(mutatedCipherText)

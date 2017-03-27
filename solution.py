@@ -4,8 +4,7 @@
 # Full solution proof of concept
 # Pair programmed with Ryan Lim
 
-from aesCBCgiven import aesCBCgiven
-from Padding import *
+from aesCBC import aesCBC
 import os
 
 if __name__=="__main__":
@@ -19,10 +18,8 @@ if __name__=="__main__":
     # plainText =  str.encode("12345678901234561234567890123456123456789012345")
 
     plainText = os.urandom(62)
-    encrypted = aesCBCgiven(key,iv,plainText, 'e')
-    decrypted = aesCBCgiven(key,iv,encrypted, 'd')
-
-
+    encrypted = aesCBC(key,iv,plainText, 'e')
+    decrypted = aesCBC(key,iv,encrypted, 'd')
 
     print("plaintext:          ", plainText)
     print("encypted:           ", encrypted)
@@ -33,20 +30,19 @@ if __name__=="__main__":
     else:
       print("error")
 
-    print("\n\nPerforming mutation")
+    print("\n\nPerforming mutation attack")
 
-    for plainTextLength in range(16*3, 16*5):
+    for plainTextLength in range(16*3, 16*100):
         print("plainTextLength", plainTextLength)
 
         plainText = os.urandom(plainTextLength)
-        encrypted = aesCBCgiven(key,iv,plainText, 'e')
+        encrypted = aesCBC(key,iv,plainText, 'e')
 
         correctByteArray = []
         bytesInCipherText = len(encrypted)
         blocksOfCipherText = int(bytesInCipherText / 16)
 
         pos = bytesInCipherText - 1
-
 
         for round in range(blocksOfCipherText-1):
             # print("pos", pos)
@@ -67,7 +63,7 @@ if __name__=="__main__":
                     mutatedCipherText = encrypted[0:pos-16] + wholeMutatedCipherBytes + encrypted[(16*(blocksOfCipherText-1)):(16*blocksOfCipherText)]
 
                     # server will do this part for us
-                    decrypted = aesCBCgiven(key,iv,mutatedCipherText, 'd')
+                    decrypted = aesCBC(key,iv,mutatedCipherText, 'd')
 
 
                     if(decrypted != "Padding error bitch!"):

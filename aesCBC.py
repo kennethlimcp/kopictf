@@ -1,7 +1,7 @@
 from Crypto.Cipher import AES
 from Padding import *
 
-def aesCBCgiven(key, iv, text, mode):
+def aesCBC(key, iv, text, mode):
     if(mode.lower() == 'e'):
         aesEncrypt = obj = AES.new(key, AES.MODE_CBC, iv)
         padded = text

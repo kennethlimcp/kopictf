@@ -4,7 +4,7 @@
 # AES demo code for pycrypto package
 
 import os
-from aesCBCgiven import aesCBCgiven
+from aesCBC import aesCBC
 
 def generateAesKey():
   key = os.urandom(32) # 32 bytes is 32*8 = 256bits
@@ -48,10 +48,10 @@ if __name__=="__main__":
   print("Plaintext generated!")
   print("plaintext:          ", plaintext)
 
-  encrypted = aesCBCgiven(key,iv,plaintext, 'e')
+  encrypted = aesCBC(key,iv,plaintext, 'e')
   print("encypted:           ", encrypted)
 
-  decrypted = aesCBCgiven(key,iv,encrypted, 'd')
+  decrypted = aesCBC(key,iv,encrypted, 'd')
   print("decrypted:          ", decrypted)
 
   if(plaintext == decrypted):
@@ -66,10 +66,10 @@ if __name__=="__main__":
   print("Plaintext generated!")
   print("plaintext:          ", plaintext)
 
-  encrypted = aesCBCgiven(key,iv,plaintext, 'e')
+  encrypted = aesCBC(key,iv,plaintext, 'e')
   print("encypted:           ", encrypted)
 
-  decrypted = aesCBCgiven(key,iv,encrypted, 'd')
+  decrypted = aesCBC(key,iv,encrypted, 'd')
   print("decrypted:          ", decrypted)
 
   if(plaintext == decrypted):
