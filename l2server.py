@@ -37,10 +37,10 @@ class EchoRequestHandler(socketserver.BaseRequestHandler):
 
         mess = "Please enter ciphertext :D\n"
 
-        self.request.send(mess.encode('ascii'))
-        data = self.request.recv(16*5).strip() # including newline
+        # self.request.send(mess.encode('ascii'))
+        self.request.send(encrypted)
+        data = self.request.recv(16*50).strip() # including newline
 
-        print("data", len(data))
         #Process user input as bytes
         ct_bytes = data
         self.logger.debug(ct_bytes.hex())
@@ -82,10 +82,11 @@ if __name__ == '__main__':
 
     iv =  str.encode("1234567890123456")
     key =  str.encode("1234567890123456")
-    #plainText = os.urandom(62)
-    plainText = b'\xb6\xe5\x17u \xc9\xcd\x9c\xc03\xeab\xda\xe5\xc7o\xcb\x99\x83\x06\x9a\xef=\xafe9\xc8\xd2D\x06QG\x92\xd3\xb4\xac\x96\x8dXf!J\xee\xb0A\xbd&LZ\xeb\xdaO\xe8JN\x84\x89\x1e\xb0$\x97e'
+
+    plainText =  str.encode("IrrelevantStart!limkopiCTF{ReyonTheShark}<--flagnotaflaglol:))))")
+
     encrypted = aesCBC(key,iv,plainText, 'e')
-    print (encrypted.hex())
+    print (encrypted)
     decrypted = aesCBC(key,iv,encrypted, 'd')
 
     address1 = ('0.0.0.0', port1)
