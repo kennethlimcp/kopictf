@@ -14,8 +14,8 @@ import os
 from aesCBC import aesCBC
 from Padding import *
 
-port1 = 1337 
-CIPHERTEXT_BYTELENGTH = 64
+port1 = 1337
+CIPHERTEXT_BYTELENGTH = 16*5
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(name)s: %(message)s',
@@ -25,7 +25,7 @@ logging.basicConfig(level=logging.DEBUG,
 class EchoRequestHandler(socketserver.BaseRequestHandler):
 
     def __init__(self, request, client_address, server):
-        self.logger = logging.getLogger('EchoRequestHandler')        
+        self.logger = logging.getLogger('EchoRequestHandler')
         self.logger.debug('__init__')
         socketserver.BaseRequestHandler.__init__(
             self, request, client_address, server)
@@ -38,24 +38,22 @@ class EchoRequestHandler(socketserver.BaseRequestHandler):
         mess = "Please enter ciphertext :D\n"
 
         self.request.send(mess.encode('ascii'))
-        data = self.request.recv(64) # including newline
+        data = self.request.recv(16*5).strip() # including newline
 
+        print("data", len(data))
         #Process user input as bytes
         ct_bytes = data
         self.logger.debug(ct_bytes.hex())
-        if len(ct_bytes) == CIPHERTEXT_BYTELENGTH:
-            try:
-                decryptAttempt = aesCBC(key,iv,ct_bytes, 'd')
-                self.logger.debug(decryptAttempt==decrypted)
-                self.request.send("Good jobbu")
+        try:
+            decryptAttempt = aesCBC(key,iv,ct_bytes, 'd')
+            self.logger.debug(decryptAttempt==decrypted)
+            self.request.send("correct".encode('ascii'))
 
-            except ValueError as e:
-                self.request.send('ERRORORORO PADDIN WOER EORROR'.encode('ascii'))                
-            
-            #self.logger.debug('Your ciphertext was: ' + ct_bytes)
-        else:
-            self.request.send('The ciphertext is the wrong length! :O'.encode('ascii'))            
-        self.request.send('Goodbye!\n'.encode('ascii'))
+        except ValueError as e:
+            self.request.send('error'.encode('ascii'))
+
+        #self.logger.debug('Your ciphertext was: ' + ct_bytes)
+        # self.request.send('Goodbye!\n'.encode('ascii'))
         return
 
 
@@ -64,7 +62,7 @@ class EchoServer(socketserver.ThreadingMixIn,socketserver.TCPServer):
     def __init__(self, server_address, handler_class=EchoRequestHandler):
 
         self.logger = logging.getLogger('EchoServer')
-        
+
         self.logger.debug('__init__')
         self.allow_reuse_address = True
         self.daemon_threads = True
