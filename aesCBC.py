@@ -19,7 +19,7 @@ def aesCBC(key, iv, text, mode):
             unpadded = unpad(decrypted,16,'pkcs7')
 
         except ValueError:
-            return "Padding error bitch!"
+            raise ValueError("Padding error biiiatch")
 
         # print("unpadded:           ", unpadded)
         return unpadded
