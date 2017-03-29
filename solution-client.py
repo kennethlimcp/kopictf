@@ -1,39 +1,21 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
-# DA 2017
+# Lim Chen Pin Kenneth
+# 28 March 2017
+# Client solution for challenge
+# Pair programmed with Ryan Lim
 
-"""
-Lab2: Breaking Ciphers
-
-Pwntool client for python3
-
-Install: sudo pip3 install git+https://github.com/arthaud/python3-pwntools.git
-
-Documentation: https://python3-pwntools.readthedocs.io/en/latest/
-"""
-
-#from pwn import remote
 import socket
-from aesCBC import aesCBC
-import time
 
 if __name__ == "__main__":
   # NOTE: UPPERCASE names for constants is a (nice) Python convention
   URL = 'localhost'
   PORT = 1337
 
-  # iv =  str.encode("1234567890123456")
-  # key =  str.encode("1234567890123456")
-  #
-  # plainText =  str.encode("IrrelevantStart!limkopiCTF{ReyonTheShark}<--flagnotaflaglol:))))")
-
-  # encrypted = aesCBC(key,iv,plainText, 'e')
-  # decrypted = aesCBC(key,iv,encrypted, 'd')
-
   conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   conn.connect ((URL,PORT))
   encrypted = conn.recv(4000).strip()
-  print(encrypted)
+  print("\nCipher text received: " encrypted, "\n\n")
   conn.close()
 
   correctByteArray = []
@@ -65,7 +47,6 @@ if __name__ == "__main__":
         mutatedCipherText = encrypted[0:pos-16] + wholeMutatedCipherBytes + encrypted[(16*(blocksOfCipherText-1)):(16*blocksOfCipherText)]
 
         # server will do this part for us
-        # decrypted = aesCBC(key,iv,mutatedCipherText, 'd')
         conn.send(mutatedCipherText)
         serverResult = conn.recv(7)
 
