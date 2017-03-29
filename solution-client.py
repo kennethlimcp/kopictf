@@ -12,11 +12,13 @@ if __name__ == "__main__":
   URL = 'localhost'
   PORT = 1337
 
-  conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-  conn.connect ((URL,PORT))
-  encrypted = conn.recv(4000).strip()
-  print("\nCipher text received: " encrypted, "\n\n")
-  conn.close()
+  encrypted = b'P\xe2s\x14&o\xda\x04\x124\xb3\xf2\x8d\x97\xeaG\xa4H\n5}m\t.\xe1\xaf\xa7\x0f\xc3\x8d8\x04!\x06AP\x13\xa8[\x01#\xcao\xb9\xc6\xbf^\x97*A\x92j)MfmEL\xa5\xef\xbc.(\xfe\xc2\xf1\xb3e@Z\x91=\x19\xba\xdc\xbb\x1a\x01Eu'
+
+  # conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+  # conn.connect ((URL,PORT))
+  # encrypted = conn.recv(4000).strip()
+  # print("\nCipher text received: " encrypted, "\n\n")
+  # conn.close()
 
   correctByteArray = []
   bytesInCipherText = len(encrypted)
@@ -38,7 +40,6 @@ if __name__ == "__main__":
       for correctByte in range(0, 256): #should use ascii.printable range
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn.connect ((URL,PORT))
-        message = conn.recv(1024)
 
         mutatedCipherByte = (encrypted[pos-16] ^ correctByte ^ pad).to_bytes(1, 'little')
 
