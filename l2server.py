@@ -45,10 +45,10 @@ class EchoRequestHandler(socketserver.BaseRequestHandler):
         try:
             decryptAttempt = aesCBC(key,iv,ct_bytes, 'd')
             self.logger.debug(decryptAttempt==decrypted)
-            self.request.send("correct".encode('ascii'))
+            self.request.send("ree".encode('ascii'))
 
         except ValueError as e:
-            self.request.send('error'.encode('ascii'))
+            self.request.send('yon'.encode('ascii'))
 
         #self.logger.debug('Your ciphertext was: ' + ct_bytes)
         # self.request.send('Goodbye!\n'.encode('ascii'))

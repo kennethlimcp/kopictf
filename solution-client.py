@@ -51,7 +51,7 @@ if __name__ == "__main__":
         conn.send(mutatedCipherText)
         serverResult = conn.recv(7)
 
-        if(str(serverResult, 'utf-8') == "correct"):
+        if(str(serverResult, 'utf-8') == "ree"):
           if(round >= 0 and pad == 0x01):
             possibleValues.append(correctByte)
           else:
