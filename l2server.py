@@ -37,8 +37,6 @@ class EchoRequestHandler(socketserver.BaseRequestHandler):
 
         mess = "Please enter ciphertext :D\n"
 
-        # self.request.send(mess.encode('ascii'))
-        self.request.send(encrypted)
         data = self.request.recv(16*50).strip() # including newline
 
         #Process user input as bytes
@@ -99,27 +97,3 @@ if __name__ == '__main__':
     t1.socket.close()
 
 
- # mess = "Welcome to challenge \"%s\" of length %d: " % (
-            # challenges[port]['text'], len(challenges[port]['data']))
-            # footer = "\nPlease send your solution of length %d now:\n"%len(challenges[port]['data'])
-            # self.request.send(mess.encode('ascii'))
-            # self.request.send(challenges[port]['data'])
-            # self.request.send(footer.encode('ascii'))
-            # print("waiting for response of len %d"%len(challenges[port]['data']))
-            # buf=b''
-            # new= self.request.recv(10)
-            # while len(buf)<len(challenges[port]['data']) and new  and not b'exit' in new:
-            #     buf += new
-
-            #     mis = len(challenges[port]['data'])-len(buf) # the number of bytes missing
-            #     if mis > 10:
-            #         mis = 10 # we don't want to wait for too long?
-            #     new = self.request.recv(mis)
-            # self.logger.debug('recv()->"%s"', buf)
-            # print("received response of len %d"%len(buf))
-            # data=buf[:len(challenges[port]['data'])]
-            # val = challenges[port]['val'](data, challenges[port]['sol'].encode('ascii'), challenges[port]['key'].encode('ascii'))
-            # if val:
-            #     self.request.send(val)
-            # else:
-            #     self.request.send('Incorrect answer, please try again\n'.encode('ascii'))
