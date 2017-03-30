@@ -3,6 +3,10 @@
 # 50.020 Security Server Lab2
 # Nils, SUTD, 2017
 
+
+# Server for Team Reyon
+# Requires: pip3 install pycrypto
+
 import logging
 import sys
 import socketserver
@@ -12,15 +16,12 @@ import socket
 import threading
 import os
 from aesCBC import aesCBC
-from Padding import *
 
 port1 = 1337
-CIPHERTEXT_BYTELENGTH = 16*5
 
 logging.basicConfig(level=logging.DEBUG,
                     format='%(name)s: %(message)s',
                     )
-
 
 class EchoRequestHandler(socketserver.BaseRequestHandler):
 
@@ -37,21 +38,18 @@ class EchoRequestHandler(socketserver.BaseRequestHandler):
 
         mess = "Please enter ciphertext :D\n"
 
-        data = self.request.recv(16*50).strip() # including newline
+        data = self.request.recv(16*10).strip() # including newline
 
         #Process user input as bytes
         ct_bytes = data
         self.logger.debug(ct_bytes.hex())
         try:
             decryptAttempt = aesCBC(key,iv,ct_bytes, 'd')
-            self.logger.debug(decryptAttempt==decrypted)
             self.request.send("ree".encode('ascii'))
 
         except ValueError as e:
             self.request.send('yon'.encode('ascii'))
 
-        #self.logger.debug('Your ciphertext was: ' + ct_bytes)
-        # self.request.send('Goodbye!\n'.encode('ascii'))
         return
 
 
@@ -77,15 +75,8 @@ class EchoServer(socketserver.ThreadingMixIn,socketserver.TCPServer):
 
 
 if __name__ == '__main__':
-
-    iv =  str.encode("1234567890123456")
-    key =  str.encode("1234567890123456")
-
-    plainText =  str.encode("IrrelevantStart!limkopiCTF{ReyonTheShark}<--flagnotaflaglol:))))")
-
-    encrypted = aesCBC(key,iv,plainText, 'e')
-    print (encrypted)
-    decrypted = aesCBC(key,iv,encrypted, 'd')
+    iv =  b'~\x13\xbd\xd5\x9d\xb7\x9bw\x0b\xbe\xef\\u\xb47E'
+    key = b'"]/\xfb}\x18V\xab\xf3\x1eY\x15\xef\xa5hH'
 
     address1 = ('0.0.0.0', port1)
     server1 = EchoServer(address1, EchoRequestHandler)
@@ -95,5 +86,3 @@ if __name__ == '__main__':
     t1.start()
     input("press a key to kill")
     t1.socket.close()
-
-
