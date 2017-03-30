@@ -33,22 +33,27 @@ class EchoRequestHandler(socketserver.BaseRequestHandler):
         return
 
     def handle(self):
-        self.logger.debug('handle' + str(self.request.getsockname()))
-        port = self.request.getsockname()[1]
-
-        mess = "Please enter ciphertext :D\n"
-
-        data = self.request.recv(16*10).strip() # including newline
-
-        #Process user input as bytes
-        ct_bytes = data
-        self.logger.debug(ct_bytes.hex())
         try:
+            self.logger.debug('handle' + str(self.request.getsockname()))
+            port = self.request.getsockname()[1]
+
+            mess = "Please enter ciphertext :D\n"
+
+            data = self.request.recv(16*10).strip() # including newline
+
+            #Process user input as bytes
+            ct_bytes = data
+            self.logger.debug(ct_bytes.hex())
+
             decryptAttempt = aesCBC(key,iv,ct_bytes, 'd')
             self.request.send("ree".encode('ascii'))
 
         except ValueError as e:
             self.request.send('yon'.encode('ascii'))
+
+        except:
+            self.request.send('yon'.encode('ascii'))
+            self.logger.debug("Error exception")
 
         return
 
