@@ -11,17 +11,20 @@ import binascii
 if __name__=="__main__":
     print("\n\nPerforming verification")
 
-    iv =  str.encode("1234567890123456")
-    key =  str.encode("1234567890123456")
+    # iv =  os.urandom(16) #str.encode("1234567890123456")
+    # key = os.urandom(16) #str.encode("1234567890123456")
+    iv =  b'~\x13\xbd\xd5\x9d\xb7\x9bw\x0b\xbe\xef\\u\xb47E'
+    key = b'"]/\xfb}\x18V\xab\xf3\x1eY\x15\xef\xa5hH'
 
-    plainText =  str.encode("IrrelevantStart!limkopiCTF{ReyonTheShark}<--flagnotaflaglol:))))")
+    plainText =  str.encode("IrrelevantStart!-->kopiCTF{ReyonTheShark}<--flagnotaflaglol:)))")
 
     encrypted = aesCBC(key,iv,plainText, 'e')
     decrypted = aesCBC(key,iv,encrypted, 'd')
 
-    #perform assertion to check that our plainText is 4 blocks long, encrypted is 5 blocks due to padding
-    assert len(plainText) == 16*4
-    assert len(encrypted) == 16*5
+
+    #perform assertion to check that our plainText is 63 bytes long, encrypted is 64 bytes
+    assert len(plainText) == 16*4 - 1
+    assert len(encrypted) == 16*4
 
     print("\nChecking with library enc/dec method\n")
     print("plaintext:          ", plainText)

@@ -12,7 +12,8 @@ if __name__ == "__main__":
   URL = 'localhost'
   PORT = 1337
 
-  encrypted = b'P\xe2s\x14&o\xda\x04\x124\xb3\xf2\x8d\x97\xeaG\xa4H\n5}m\t.\xe1\xaf\xa7\x0f\xc3\x8d8\x04!\x06AP\x13\xa8[\x01#\xcao\xb9\xc6\xbf^\x97*A\x92j)MfmEL\xa5\xef\xbc.(\xfe\xc2\xf1\xb3e@Z\x91=\x19\xba\xdc\xbb\x1a\x01Eu'
+  encrypted = b"P\xe2s\x14&o\xda\x04\x124\xb3\xf2\x8d\x97\xeaG\x1fn9%\x8c\xb8\xb6'K\xdd6\xdc>IZ\x95\xf5?\xd1CM\xd5\xe1r\xaf\x04+\xed5\xda&\xe6\xc3\x84\xf2\xc9\xc5rx\n_\xb7*\xd8\xa8\x9f\xb9a"
+
 
   # conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
   # conn.connect ((URL,PORT))
@@ -37,7 +38,7 @@ if __name__ == "__main__":
         for counter in range(0, pad-1):
           mutatedBytes = (encrypted[((blocksOfCipherText-1)*16)-1-counter] ^ correctByteArray[counter + round*16] ^ pad).to_bytes(1, 'little') + mutatedBytes
 
-      for correctByte in range(0, 256): #should use ascii.printable range
+      for correctByte in reversed(range(256)): #should use ascii.printable range
         conn = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         conn.connect ((URL,PORT))
 
@@ -52,19 +53,19 @@ if __name__ == "__main__":
         serverResult = conn.recv(7)
 
         if(str(serverResult, 'utf-8') == "ree"):
-          if(round >= 0 and pad == 0x01):
-            possibleValues.append(correctByte)
-          else:
-            correctByteArray.append(correctByte)
+          # if(round >= 0 and pad == 0x01):
+            # possibleValues.append(correctByte)
+          # else:
+          correctByteArray.append(correctByte)
 
         conn.close()
 
       #edge case of solving last byte check of the padding block
-      if(round >= 0 and pad == 0x01):
-        if(len(possibleValues) == 1):
-          correctByteArray.append(possibleValues[0])
-        else:
-          correctByteArray.append(possibleValues[len(possibleValues)-1])
+      # if(round >= 0 and pad == 0x01):
+      #   if(len(possibleValues) == 1):
+      #     correctByteArray.append(possibleValues[0])
+      #   else:
+      #     correctByteArray.append(possibleValues[len(possibleValues)-1])
 
       pos = pos - 1
       solution = b''
