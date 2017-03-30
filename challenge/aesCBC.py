@@ -3,14 +3,14 @@ from Padding import *
 
 def aesCBC(key, iv, text, mode):
     if(mode.lower() == 'e'):
-        aesEncrypt = obj = AES.new(key, AES.MODE_CBC, iv)
+        aesEncrypt = AES.new(key, AES.MODE_CBC, iv)
         padded = text
         padded = pad(padded,16,'pkcs7')
 
         # print("padded:             ", padded)
         return aesEncrypt.encrypt(padded)
     elif(mode.lower() == 'd'):
-        aesDecrypt = obj = AES.new(key, AES.MODE_CBC, iv)
+        aesDecrypt = AES.new(key, AES.MODE_CBC, iv)
         decrypted = aesDecrypt.decrypt(text)
         # print("decrypted with pad: ", decrypted)
 
