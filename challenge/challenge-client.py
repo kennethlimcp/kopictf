@@ -24,3 +24,11 @@ if __name__ == "__main__":
 	serverResult = conn.recv(7)
 	print(serverResult.decode('utf-8'))
 	conn.close()
+
+	## Tip: The oracle only accepts bytes as input! One way to modify the byte string is:
+	## mutatedByte = (encrypted[15] ^ encrypted[16] ^ 0x1).to_bytes(1, 'little')
+	##
+    ## modifiedCipherText = encrypted[0:15] + mutatedByte + encrypted[16:]
+    ##
+    ## This will allow you to modify individual bytes of the ciphertext.
+    ## GLHF
