@@ -1,0 +1,14 @@
+{
+	"id": 0,
+	"name": "The Alien Oracle",
+	"short_name": "Crypto",
+	"tasks": [{
+		"id": 0,
+		"row": 0,
+		"name": "The Alien Oracle",
+		"score": "50",
+		"flag": "kopiCTF{ReyonTheShark}",
+		"desc": "Once upon a time, you are stuck in an alien planet, with your only means to return home hidden within the alien message. \n\n\nThe message comes in four 16-symbol blocks, and the answer is hidden in the second and third blocks of the message. The message originated from the Cryogenic-Bezier-Curve and not the primitive version, Ectoplasmic-Cuckoo-Boogaloo. Fortunately, there is an alien Oracle that lives in the planet, but it only speaks in alien tongue. It only will say \"ree\" if your alien message submitted has proper Planetary-Kebab-Cosmic-Solomon-7 padding (like one used on Earth) and \"yon\" if it does not. A means of communicating with the alien Oracle has been provided in challenge-client.py. You realise you are missing essential information for the first block, but the Oracle says it is irrelevant. \n\n\n You have only 75 hours before nightfall in this alien planet, where you will freeze over in its subzero temperatures. \n\nWill you be able to return home?",
+		"file": "Team-Reyon-Alien-Oracle.zip"
+	}]
+}
